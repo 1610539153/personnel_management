@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.dao.RecruitMessageDao">
+    <resultMap id="recruitMessageMap" type="RecruitMessage" >
+        <id column="id" property="id"></id>
+        <result column="ADMIN_ID" property="adminId"></result>
+        <result column="POST_ID" property="postId"></result>
+        <result column="RECRUIT_SALARY" property="recruitSalary"></result>
+        <result column="RECRUIT_NUMBER" property="recruitNumber"></result>
+        <result column="RECRUIT_IS_NORMAL" property="recruitIsNormal"></result>
+        <result column="RECRUIT_CREATE_TIME" property="recruitCreateTime"></result>
+        <result column="RECRUIT_MODIFIED_TIME" property="recruitModifiedTime"></result>
+    </resultMap>
+
+    <insert id="addRecruitMessage" parameterType="RecruitMessage">
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+            <include refid="createId"></include>
+        </selectKey>
+        INSERT INTO XIAODENG.RECRUIT_MESSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                ID,
+            </if>
+            <if test="adminId!=null">
+                ADMIN_ID,
+            </if>
+            <if test="postId!=null">
+                POST_ID,
+            </if>
+            <if test="recruitSalary!=null">
+                RECRUIT_SALARY,
+            </if>
+            <if test="recruitNumber!=null">
+                RECRUIT_NUMBER,
+            </if>
+            <if test="recruitIsNormal!=null">
+                RECRUIT_IS_NORMAL,
+            </if>
+            <if test="recruitCreateTime!=null">
+                RECRUIT_CREATE_TIME,
+            </if>
+            <if test="recruitModifiedTime!=null">
+                RECRUIT_MODIFIED_TIME,
+            </if>
+        </trim>
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="adminId!=null">
+                #{adminId},
+            </if>
+            <if test="postId!=null">
+                #{postId},
+            </if>
+
+            <if test="recruitSalary!=null">
+                #{recruitSalary},
+            </if>
+
+            <if test="recruitNumber!=null">
+                #{recruitNumber},
+            </if>
+
+            <if test="recruitIsNormal!=null">
+                #{recruitIsNormal},
+            </if>
+
+            <if test="recruitCreateTime!=null">
+                #{recruitCreateTime},
+            </if>
+
+            <if test="recruitModifiedTime!=null">
+                #{recruitModifiedTime},
+            </if>
+        </trim>
+    </insert>
+    <sql id="createId">
+        SELECT S_USER_SEQ.nextval FROM dual
+    </sql>
+    <sql id="queryRecruitMessage">
+        SELECT  *  FROM RECRUIT_MESSAGE
+    </sql>
+    <select id="seekRecruitMessage" parameterType="RecruitMessage" resultMap="recruitMessageMap">
+        <include refid="queryRecruitMessage"></include>
+    </select>
+
+
+    <select id="seekMyRecruitMessage" parameterType="RecruitMessage" resultMap="recruitMessageMap">
+        <include refid="queryRecruitMessage"></include>
+        <where>
+            <choose>
+                <when test="adminId!=null">
+                    AND ADMIN_ID=#{adminId}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <sql id="checkid">
+        <where>
+            <choose>
+                <when test="id!=null">
+                    AND  id=#{id}
+                </when>
+                <otherwise>
+                    AND 1=2
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    <delete id="deleteMyRecruitMessage" parameterType="RecruitMessage">
+       DELETE    FROM  RECRUIT_MESSAGE
+        <include refid="checkid"></include>
+    </delete>
+</mapper>

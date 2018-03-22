@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.dao.EmpDao">
+    <resultMap id="empMap" type="Emp" >
+        <id column="id" property="id"></id>
+        <result column="EMP_NAME" property="empName"></result>
+        <result column="EMP_PASSWORD" property="empPassword"></result>
+        <result column="STATE" property="state"></result>
+        <result column="HAVE_YOU_TRAINED" property="haveYouTrained"></result>
+        <result column="BASE_SALARY" property="baseSalary"></result>
+        <result column="ENTRY_TIME" property="entryTime"></result>
+        <result column="EMP_CREATE_TIME" property="empCreateTime"></result>
+        <result column="EMP_MODIFIED_TIME" property="empModifiedTime"></result>
+        <result column="D_NAME" property="dName"></result>
+        <result column="POST_NAME" property="postName"></result>
+    </resultMap>
+    <insert id="addEmp" parameterType="Emp">
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+            <include refid="createId"></include>
+        </selectKey>
+        INSERT INTO XIAODENG.EMP
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null"> ID,</if>
+            <if test="empName!=null">EMP_NAME,</if>
+            <if test="empPassword!=null">EMP_PASSWORD,</if>
+            <if test="state!=null">STATE,</if>
+            <if test="haveYouTrained!=null"> HAVE_YOU_TRAINED, </if>
+            <if test="baseSalary!=null">BASE_SALARY, </if>
+            <if test="entryTime!=null">ENTRY_TIME, </if>
+            <if test="empCreateTime!=null">EMP_CREATE_TIME,</if>
+            <if test="empModifiedTime!=null">EMP_MODIFIED_TIME,</if>
+            <if test="dName">D_NAME,</if>
+            <if test="postName!=null">POST_NAME,</if>
+
+        </trim>
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="empName!=null">
+                #{empName},
+            </if>
+            <if test="empPassword!=null">
+                #{empPassword},
+            </if>
+
+            <if test="state!=null">
+                #{state},
+            </if>
+
+            <if test="haveYouTrained!=null">
+                #{haveYouTrained},
+            </if>
+
+            <if test="baseSalary!=null">
+                #{baseSalary},
+            </if>
+
+            <if test="entryTime!=null">
+                #{entryTime},
+            </if>
+
+            <if test="empCreateTime!=null">
+                #{empCreateTime},
+            </if>
+            <if test="empModifiedTime!=null">
+                #{empModifiedTime},
+            </if>
+            <if test="dName!=null">
+                #{dName},
+            </if>
+            <if test="postName!=null">
+                #{postName},
+            </if>
+        </trim>
+    </insert>
+    <sql id="createId">
+        SELECT S_USER_SEQ.nextval FROM dual
+    </sql>
+
+    <sql id="checkid">
+        <where>
+            <choose>
+                <when test="id!=null">
+                    AND  id=#{id}
+                </when>
+                <otherwise>
+                    AND 1=2
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    <sql id="queryEmp">
+        SELECT  *  FROM EMP
+    </sql>
+    <select id="findEmpByName" parameterType="Emp" resultMap="empMap">
+        <include refid="queryEmp"></include>
+        <where>
+            <choose>
+                <when test="empName!=null and empPassword!=null">
+                    AND EMP_NAME=#{empName}
+                    AND  EMP_PASSWORD=#{empPassword}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <select id="findEmp" parameterType="Emp" resultMap="empMap">
+        <include refid="queryEmp"></include>
+        <where>
+            <choose>
+                <when test="empName!=null">
+                    AND EMP_NAME=#{empName}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+</mapper>

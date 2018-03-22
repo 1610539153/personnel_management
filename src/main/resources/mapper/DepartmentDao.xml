@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.dao.DepartmentDao">
+    <resultMap id="departmentMap" type="Department" >
+    <id column="id" property="id"></id>
+    <result column="D_NAME" property="dName"></result>
+    <result column="DEPARTMENT_CREATE_TIME" property="departmentCreateTime"></result>
+    <result column="DEPARTMENT_MODIFIED_TIME" property="departmentModifiedTime"></result>
+</resultMap>
+
+    <sql id="createId">
+    SELECT S_USER_SEQ.nextval FROM dual
+</sql>
+
+    <insert id="addDepartment" parameterType="Department">
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+            <include refid="createId"></include>
+        </selectKey>
+        INSERT INTO XIAODENG.DEPARTMENT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                ID,
+            </if>
+            <if test="dName!=null">
+                D_NAME,
+            </if>
+            <if test="departmentCreateTime!=null">
+                DEPARTMENT_CREATE_TIME,
+            </if>
+
+            <if test="departmentModifiedTime!=null">
+                DEPARTMENT_MODIFIED_TIME,
+            </if>
+
+        </trim>
+
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="dName!=null">
+                #{dName},
+            </if>
+            <if test="departmentCreateTime!=null">
+                #{departmentCreateTime},
+
+            </if>
+
+            <if test="departmentModifiedTime!=null">
+                #{departmentModifiedTime},
+            </if>
+        </trim>
+    </insert>
+
+    <sql id="queryDepartment">
+        SELECT  *  FROM DEPARTMENT
+    </sql>
+
+    <select id="queryDepartmentByName" parameterType="Department" resultMap="departmentMap">
+        <include refid="queryDepartment"></include>
+        <where>
+            <choose>
+                <when test="dName!=null">
+                    AND D_NAME=#{dName}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+</mapper>

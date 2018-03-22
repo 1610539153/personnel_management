@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.dao.ResumeDao">
+    <resultMap id="ResumeMap" type="Resume" >
+        <id column="id" property="id"></id>
+        <result column="CUSTOMER_ID" property="customerId"></result>
+        <result column="R_NAME" property="rName"></result>
+        <result column="HOME_ADD" property="homeAdd"></result>
+        <result column="PRESENT_ADDRESS" property="presentAddress"></result>
+        <result column="PICURL" property="picurl"></result>
+        <result column="EDUCATION_BACKGROUND" property="educationBackground"></result>
+        <result column="COLLEGE" property="college"></result>
+        <result column="MAJOR" property="major"></result>
+        <result column="RESUME_CREATE_TIME" property="resumeCreateTime"></result>
+        <result column="RESUME_MODIFIED_TIME" property="resumeModifiedTime"></result>
+    </resultMap>
+
+    <sql id="createId">
+        SELECT S_USER_SEQ.nextval FROM dual
+    </sql>
+
+    <sql id="checkid">
+        <where>
+            <choose>
+                <when test="id!=null">
+                    AND  id=#{id}
+                </when>
+                <otherwise>
+                    AND 1=2
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+
+    <insert id="addResume" parameterType="Resume">
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+            <include refid="createId"></include>
+        </selectKey>
+        INSERT INTO XIAODENG.RESUME
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                ID,
+            </if>
+            <if test="customerId!=null">
+                CUSTOMER_ID,
+            </if>
+            <if test="rName!=null">
+                R_NAME,
+            </if>
+
+            <if test="homeAdd!=null">
+                HOME_ADD,
+            </if>
+
+            <if test="presentAddress!=null">
+                PRESENT_ADDRESS,
+            </if>
+
+
+            <if test="picurl!=null">
+                PICURL,
+            </if>
+
+            <if test="educationBackground!=null">
+                 EDUCATION_BACKGROUND,
+            </if>
+
+            <if test="college!=null">
+                 COLLEGE,
+            </if>
+
+            <if test="major!=null">
+                 MAJOR,
+            </if><if test="individualResume!=null">
+                INDIVIDUAL_RESUME,
+            </if>
+            <if test="resumeCreateTime!=null">
+                RESUME_CREATE_TIME,
+            </if>
+            <if test="resumeModifiedTime!=null">
+                RESUME_MODIFIED_TIME,
+            </if>
+
+        </trim>
+
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+
+            <if test="customerId!=null">
+                #{customerId},
+            </if>
+
+            <if test="rName!=null">
+                #{rName},
+            </if>
+
+            <if test="homeAdd!=null">
+                #{homeAdd},
+            </if>
+
+            <if test="presentAddress!=null">
+                #{presentAddress},
+            </if>
+
+            <if test="picurl!=null">
+                #{picurl},
+            </if>
+
+            <if test="educationBackground!=null">
+                #{educationBackground},
+
+            </if>
+
+            <if test="college!=null">
+                #{college},
+            </if>
+
+            <if test="major!=null">
+                #{major},
+            </if>
+
+            <if test="individualResume!=null">
+                #{individualResume},
+            </if>
+
+            <if test="resumeCreateTime!=null">
+                #{resumeCreateTime},
+            </if>
+
+            <if test="resumeModifiedTime!=null">
+                #{resumeModifiedTime},
+            </if>
+
+        </trim>
+    </insert>
+
+    <sql id="queryResume">
+        SELECT  *  FROM resume
+    </sql>
+
+    <select id="checkMyResume" parameterType="Resume" resultMap="ResumeMap">
+        <include refid="queryResume"></include>
+        <where>
+            <choose>
+                <when test="customerId!=null">
+                    AND CUSTOMER_ID=#{customerId}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="checkAppointResumeByResumeId" parameterType="Resume" resultMap="ResumeMap">
+        <include refid="queryResume"></include>
+        <where>
+            <choose>
+                <when test="id!=null and customerId!=null">
+                    AND ID=#{id}
+                    AND CUSTOMER_ID=#{customerId}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+
+    <!--<update id="updateResume" parameterType="Resume">-->
+    <!--UPDATE XIAODENG.RESUME-->
+    <!--<set>-->
+        <!--<if test="rName!=null">R_NAME=#{rName}, </if>-->
+        <!--<if test="homeAdd!=null"> HOME_ADD=#{homeAdd}, </if>-->
+        <!--<if test="presentAddress!=null"> PRESENT_ADDRESS=#{presentAddress}, </if>-->
+        <!--<if test="picurl!=null">PICURL =#{picurl}, </if>-->
+        <!--<if test="educationBackground!=null"> EDUCATION_BACKGROUND=#{educationBackground},</if>-->
+        <!--<if test="college!=null"> COLLEGE=#{college}, </if>-->
+        <!--<if test="major!=null">MAJOR=#{major}</if>-->
+        <!--<if test="individualResume!=null">INDIVIDUAL_RESUME =#{individualResume}, </if>-->
+        <!--<if test="resumeCreateTime!=null">RESUME_CREATE_TIME=#{resumeCreateTime},</if>-->
+        <!--<if test="resumeModifiedTime!=null"> RESUME_MODIFIED_TIME=#{resumeModifiedTime},</if>-->
+    <!--</set>-->
+    <!--<where>-->
+        <!--<choose>-->
+            <!--<when test="id!=null">-->
+                 <!--AND  ID=#{id}-->
+            <!--</when>-->
+                   <!--<otherwise>-->
+                <!--AND 1=2-->
+                    <!--</otherwise>-->
+        <!--</choose>-->
+    <!--</where>-->
+ <!--</update>-->
+
+
+    <update id="updateResume">
+      UPDATE RESUME
+    <set>
+    <if test="rName!=null">R_NAME=#{rName}, </if>
+    <if test="homeAdd!=null"> HOME_ADD=#{homeAdd}, </if>
+    <if test="presentAddress!=null"> PRESENT_ADDRESS=#{presentAddress}, </if>
+    <if test="picurl!=null">PICURL =#{picurl}, </if>
+    <if test="educationBackground!=null"> EDUCATION_BACKGROUND=#{educationBackground},</if>
+    <if test="college!=null"> COLLEGE=#{college}, </if>
+    <if test="major!=null">MAJOR=#{major}, </if>
+    <if test="individualResume!=null">INDIVIDUAL_RESUME =#{individualResume}, </if>
+    <if test="resumeCreateTime!=null">RESUME_CREATE_TIME=#{resumeCreateTime},</if>
+    <if test="resumeModifiedTime!=null"> RESUME_MODIFIED_TIME=#{resumeModifiedTime}</if>
+   </set>
+    <include refid="test_id"/>
+</update>
+     <sql id="test_id">
+        <where>
+           <choose>
+                 <when test="id!=null">
+                     ID=#{id}
+                 </when>
+                 <otherwise>AND 1=2</otherwise>
+         </choose>
+     </where>
+   </sql>
+    <!--<select id="queryCustomerState" parameterType="Customer" resultMap="customerMap">-->
+        <!--<include refid="queryCustomer"></include>-->
+        <!--<where>-->
+            <!--<choose>-->
+                <!--<when test="customerName!=null">-->
+                    <!--AND CUSTOMER_NAME=#{customerName}-->
+                <!--</when>-->
+                <!--<otherwise>-->
+                    <!--AND  1=2-->
+                <!--</otherwise>-->
+            <!--</choose>-->
+        <!--</where>-->
+    <!--</select>-->
+</mapper>

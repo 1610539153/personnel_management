@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iotek.dao.PostDao">
+    <resultMap id="postMap" type="Post" >
+        <id column="id" property="id"></id>
+        <result column="DEPARTMENT_ID" property="departmentId"></result>
+        <result column="ADMIN_ID" property="adminId"></result>
+        <result column="POST_NAME" property="postName"></result>
+        <result column="POST_IS_NORMAL" property="postIsNormal"></result>
+        <result column="POST_CREATE_TIME" property="postCreateTime"></result>
+        <result column="POST_MODIFIED_TIME" property="postModifiedTime"></result>
+    </resultMap>
+
+    <sql id="createId">
+    SELECT S_USER_SEQ.nextval FROM dual
+    </sql>
+
+    <insert id="addPost" parameterType="Post">
+        <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+            <include refid="createId"></include>
+        </selectKey>
+        INSERT INTO XIAODENG.POST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                ID,
+            </if>
+            <if test="departmentId!=null">
+                DEPARTMENT_ID,
+            </if>
+            <if test="postName!=null">
+                ADMIN_ID,
+            </if>
+
+            <if test="postName!=null">
+                POST_NAME,
+            </if>
+
+            <if test="postIsNormal!=null">
+                POST_IS_NORMAL,
+            </if>
+
+            <if test="postCreateTime!=null">
+                POST_CREATE_TIME,
+            </if>
+
+            <if test="postModifiedTime!=null">
+                POST_MODIFIED_TIME,
+            </if>
+
+        </trim>
+
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="departmentId!=null">
+                #{departmentId},
+            </if>
+            <if test="adminId!=null">
+                #{adminId},
+            </if>
+            <if test="postName!=null">
+                #{postName},
+            </if>
+            <if test="postIsNormal!=null">
+                #{postIsNormal},
+            </if>
+            <if test="postCreateTime!=null">
+                #{postCreateTime},
+            </if>
+            <if test="postModifiedTime!=null">
+                #{postModifiedTime},
+            </if>
+        </trim>
+    </insert>
+
+    <sql id="queryPost">
+        SELECT  *  FROM POST
+    </sql>
+
+    <select id="checkPost" parameterType="Post" resultMap="postMap">
+        <include refid="queryPost"></include>
+        <where>
+            <choose>
+                <when test="postName!=null">
+                    AND POST_NAME=#{postName}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+</mapper>
