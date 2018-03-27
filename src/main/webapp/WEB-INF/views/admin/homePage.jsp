@@ -72,6 +72,7 @@
 <a class="btn  btn-primary" href="/attendance/checkAllAttendance.view">查看所有考情</a>
 <a class="btn  btn-primary" href="/attendance/checkSomeoneAttendance.view">查看某员工的考情</a>
 <a class="btn  btn-primary" href="/attendance/wageCalculation.view">工资结算</a>
+<a class="btn  btn-primary" href="/salSettlement/salaryRelease.view">工资发布</a>
 
 </body>
 </html>
