@@ -13,14 +13,7 @@
 
 <body>
   <form action="/post/additionPost.do">
-      职位名称 <select name="postName" >
-          <option value ="总经理">总经理</option>
-          <option value ="副经理">副经理</option>
-          <option value ="大管理">大管理</option>
-          <option value ="小管理">小管理</option>
-          <option value ="组长">组长</option>
-          <option value ="成员">成员</option>
-      </select>
+      职位名称<input type="text" name="postName" required><br/>
       <input type="submit" value="提交">
   </form>
 </body>

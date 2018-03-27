@@ -59,7 +59,7 @@ public class RecruitMessageController{
         Admin admin =(Admin) session.getAttribute("adminId");
         recruitMessage.setAdminId(admin.getId());
         List<RecruitMessage> recruitMessage1 = recruitMessageService.seekMyRecruitMessage(recruitMessage );
-        if(recruitMessage1==null){
+        if(recruitMessage1.size()==0){
             model.addAttribute("recruit4", "没有任何招聘信息");
             return "admin/homePage";
         }

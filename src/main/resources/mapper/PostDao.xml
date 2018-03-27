@@ -93,4 +93,21 @@
             </choose>
         </where>
     </select>
+    <select id="queryPostByDepartmentId" parameterType="Post" resultMap="postMap">
+        <include refid="queryPost"></include>
+        <where>
+            <choose>
+                <when test="departmentId!=null">
+                    AND DEPARTMENT_ID=#{departmentId}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <select id="queryPostUpdateEmp" parameterType="Post" resultMap="postMap">
+    <include refid="queryPost"></include>
+    </select>
+
 </mapper>

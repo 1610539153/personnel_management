@@ -71,4 +71,7 @@
             </choose>
         </where>
     </select>
+    <select id="checkDepartment" parameterType="Department" resultMap="departmentMap">
+        <include refid="queryDepartment"></include>
+    </select>
 </mapper>

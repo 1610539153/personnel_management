@@ -12,7 +12,9 @@
 </head>
 <body>
 <form action="/recruitMessage/recruit.do">
-    薪资<input type="text" name="recruitSalary" required><br/>
+    基本薪资<select name="recruitSalary" >
+            <option value ="4000">4000</option>
+            </select>
     需求人数 <input type="text" name="recruitNumber" required><br/>
     <input type="submit" value="提交">
 </form>

@@ -6,6 +6,8 @@ import com.iotek.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/3/20.
  */
@@ -21,5 +23,15 @@ public class PostServiceImpl implements PostService{
     @Override
     public Post checkPost(Post post) {
         return postDao.checkPost(post);
+    }
+
+    @Override
+    public List<Post> queryPostUpdateEmp() {
+        return postDao.queryPostUpdateEmp();
+    }
+
+    @Override
+    public List<Post> queryPostByDepartmentId(Post post) {
+        return postDao.queryPostByDepartmentId(post);
     }
 }

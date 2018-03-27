@@ -6,6 +6,8 @@ import com.iotek.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/3/20.
  */
@@ -20,5 +22,10 @@ public class DepartmentServiceImpl  implements DepartmentService{
     @Override
     public Department queryDepartmentByName(Department department) {
         return departmentDao.queryDepartmentByName(department);
+    }
+
+    @Override
+    public List<Department> checkDepartment() {
+        return departmentDao.checkDepartment();
     }
 }

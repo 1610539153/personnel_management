@@ -42,7 +42,7 @@ public class PutResumeController {
             model.addAttribute("putResume1","没有任何人投放简历");
             return "admin/homePage";
         }
-        session.setAttribute("putResume3",putResume1);
+//        session.setAttribute("putResume3",putResume1);
         model.addAttribute("putResume1", putResume1);
         return "admin/homePage";
     }

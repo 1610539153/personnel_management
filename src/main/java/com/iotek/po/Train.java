@@ -9,7 +9,7 @@ private String trainContent;
 
 private Timestamp trainCreateTime;
 
-private Timestamp trainTime;
+private String trainTime;
 
 private Integer adminId;
 
@@ -17,7 +17,6 @@ private String trainAddress;
 
 private Timestamp trainModifiedTime;
 
-private Timestamp trainLongTime;
 
 private Integer id;
 
@@ -32,13 +31,8 @@ public Timestamp getTrainCreateTime(){
  
  public void setTrainCreateTime(Timestamp trainCreateTime){
  this.trainCreateTime=trainCreateTime;}
- 
-public Timestamp getTrainTime(){
- return trainTime;};
- 
- public void setTrainTime(Timestamp trainTime){
- this.trainTime=trainTime;}
- 
+
+
 public Integer getAdminId(){
  return adminId;};
  
@@ -47,7 +41,15 @@ public Integer getAdminId(){
  
 public String getTrainAddress(){
  return trainAddress;};
- 
+
+ public String getTrainTime() {
+  return trainTime;
+ }
+
+ public void setTrainTime(String trainTime) {
+  this.trainTime = trainTime;
+ }
+
  public void setTrainAddress(String trainAddress){
  this.trainAddress=trainAddress;}
  
@@ -56,19 +58,24 @@ public Timestamp getTrainModifiedTime(){
  
  public void setTrainModifiedTime(Timestamp trainModifiedTime){
  this.trainModifiedTime=trainModifiedTime;}
- 
-public Timestamp getTrainLongTime(){
- return trainLongTime;};
- 
- public void setTrainLongTime(Timestamp trainLongTime){
- this.trainLongTime=trainLongTime;}
+
  
 public Integer getId(){
  return id;};
  
  public void setId(Integer id){
  this.id=id;}
- 
-public String toString(){
- return "trainContent="+trainContent+","+"trainCreateTime="+trainCreateTime+","+"trainTime="+trainTime+","+"adminId="+adminId+","+"trainAddress="+trainAddress+","+"trainModifiedTime="+trainModifiedTime+","+"trainLongTime="+trainLongTime+","+"id="+id;};
+
+ @Override
+ public String toString() {
+  return "Train{" +
+          "trainContent='" + trainContent + '\'' +
+          ", trainCreateTime=" + trainCreateTime +
+          ", trainTime='" + trainTime + '\'' +
+          ", adminId=" + adminId +
+          ", trainAddress='" + trainAddress + '\'' +
+          ", trainModifiedTime=" + trainModifiedTime +
+          ", id=" + id +
+          '}';
+ }
 }

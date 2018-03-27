@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -12,14 +13,7 @@
 </head>
 <body>
 <form action="/department/additionDepartment.do">
-    部门名称<select name="dName" >
-    <option value ="薪资部">薪资部</option>
-    <option value ="组织部">组织部</option>
-    <option value ="招聘部">招聘部</option>
-    <option value ="培训部">培训部</option>
-    <option value ="绩效部">绩效部</option>
-    <option value ="员工部">员工部</option>
-</select>
+    部门名称  <input type="text" name="dName" required><br/>
     <input type="submit" value="提交">
 </form>
 </body>

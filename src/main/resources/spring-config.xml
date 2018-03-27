@@ -73,8 +73,6 @@
         <property name="prefix" value="/WEB-INF/views/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-
-
 <!--资源文件映射-->
     <!--mapping 为使用时的web映射，location表示此种文件在工程中的目录-->
     <mvc:resources mapping="/images/**" location="/images/"/>

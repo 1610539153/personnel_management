@@ -122,4 +122,63 @@
             </choose>
         </where>
     </select>
+    <select id="checkEmp" parameterType="Emp" resultMap="empMap">
+    <include refid="queryEmp"></include>
+    </select>
+
+    <update id="updateEmp">
+        UPDATE EMP
+        <set>
+            <!--<if test="empName!=null">EMP_NAME=#{empName},</if>-->
+            <!--<if test="empPassword!=null"> EMP_PASSWORD=#{empPassword},</if>-->
+            <if test="state!=null">STATE=#{state},</if>
+            <if test="haveYouTrained!=null">HAVE_YOU_TRAINED=#{haveYouTrained},</if>
+            <if test="baseSalary!=null">BASE_SALARY=#{baseSalary},</if>
+            <if test="entryTime!=null">ENTRY_TIME=#{entryTime},</if>
+            <if test="empCreateTime!=null">EMP_CREATE_TIME=#{empCreateTime},</if>
+            <if test="empModifiedTime!=null">EMP_MODIFIED_TIME=#{empModifiedTime},</if>
+            <if test="dName!=null">D_NAME=#{dName},</if>
+            <if test="postName!=null">POST_NAME=#{postName},</if>
+        </set>
+        <include refid="test_id"/>
+    </update>
+    <sql id="test_id">
+        <where>
+            <choose>
+                <when test="id!=null">
+                    ID=#{id}
+                </when>
+                <otherwise>AND 1=2</otherwise>
+            </choose>
+        </where>
+    </sql>
+    <update id="frostEmp">
+        UPDATE EMP
+        <set>
+            <if test="empName!=null">EMP_NAME=#{empName},</if>
+            <if test="empPassword!=null"> EMP_PASSWORD=#{empPassword},</if>
+        </set>
+        <include refid="test_id"/>
+    </update>
+
+
+    <select id="checkEmpByPostName" parameterType="Emp" resultMap="empMap">
+        <include refid="queryEmp"></include>
+        <where>
+            <choose>
+                <when test="postName!=null">
+                    AND POST_NAME=#{postName}
+                </when>
+                <otherwise>
+                    AND  1=2
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="checkEmpById" parameterType="Emp" resultMap="empMap">
+        <include refid="queryEmp"></include>
+        <include refid="test_id"/>
+    </select>
+
 </mapper>

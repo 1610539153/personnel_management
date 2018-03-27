@@ -102,17 +102,17 @@
         </where>
     </select>
     <sql id="checkid">
-        <where>
-            <choose>
-                <when test="id!=null">
-                    AND  id=#{id}
-                </when>
-                <otherwise>
-                    AND 1=2
-                </otherwise>
-            </choose>
-        </where>
-    </sql>
+    <where>
+        <choose>
+            <when test="id!=null">
+                AND  id=#{id}
+            </when>
+            <otherwise>
+                AND 1=2
+            </otherwise>
+        </choose>
+    </where>
+</sql>
     <delete id="deleteMyRecruitMessage" parameterType="RecruitMessage">
        DELETE    FROM  RECRUIT_MESSAGE
         <include refid="checkid"></include>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/3/20.
@@ -37,20 +38,44 @@ public class DepartmentController {
         model.addAttribute("department3","部门已存在");
         return "admin/homePage";
     }
-
-
-    @RequestMapping(value = "/additionPostDepartment.do")
+    @RequestMapping(value ="/additionPostDepartment.do")
     public String additionPostDepartment
             (@ModelAttribute Department department,
              HttpSession session, Model model){
-        department =departmentService.queryDepartmentByName(department);
-        if(department==null){
-            model.addAttribute("department2", "请确认部门是否存在");
-            return "admin/homePage";
-        }
-        session.setAttribute("departmentId", department);
-
-        model.addAttribute("department2", "部门存在");
+        Department department1=departmentService.queryDepartmentByName(department);
+        session.setAttribute("department7",department1);
         return "post/postAddition";
+    }
+    @RequestMapping(value = "/checkDepartment.view")
+    public String checkDepartmentView
+            (@ModelAttribute Department department,
+             HttpSession session, Model model){
+        List<Department> departments = departmentService.checkDepartment();
+        if(departments.size()==0){
+            model.addAttribute("department8", "没有任何部门" );
+            return "admin/homepage";
+        }
+        model.addAttribute("department4", departments );
+        return "department/existingDepartment";
+    }
+     @RequestMapping(value = "/additionPost.View")
+     public  String additionPostView
+            (@ModelAttribute Department department,
+             HttpSession session, Model model){
+        List<Department> departments = departmentService.checkDepartment();
+        if(departments.size()==0){
+            model.addAttribute("department6","还没有部门请先添加部门" );
+            return "admin/homepage";
+        }
+        model.addAttribute("department5",departments );
+        return  "department/queryDepartment";
+    }
+    @RequestMapping(value = "/checkDepartmentUpdateEmp.view")
+    public  String updateEmpView
+            (@ModelAttribute Department department,
+             HttpSession session, Model model){
+        List<Department> departments = departmentService.checkDepartment();
+        session.setAttribute("department10",departments);
+        return  "redirect:/post/checkPostUpdateEmp.view";
     }
 }
